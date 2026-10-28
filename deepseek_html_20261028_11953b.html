@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ali Khan – Silent Companion</title>
+  <meta name="description" content="Ali Khan, your silent companion. Just sit together in a public place, with clear rules.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ==================== DESIGN TOKENS ==================== */
+    :root {
+      --bg: #f6f4ef;
+      --bg-alt: #efebe3;
+      --card: #ffffff;
+      --card-alt: #faf8f4;
+      --text: #1e2422;
+      --text-soft: #4a5652;
+      --muted: #7c8783;
+      --accent: #1f6f5c;
+      --accent-hover: #185a4a;
+      --accent-soft: #d4e8e1;
+      --accent-glow: rgba(31, 111, 92, 0.15);
+      --gold: #d9a353;
+      --gold-soft: #f5e6cd;
+      --line: #e4ddd0;
+      --line-soft: #efe9df;
+      --on: #ffffff;
+      --danger: #c0503f;
+      --shadow-sm: 0 2px 8px rgba(30, 36, 34, 0.04);
+      --shadow-md: 0 8px 24px -6px rgba(30, 36, 34, 0.08);
+      --shadow-lg: 0 20px 48px -12px rgba(30, 36, 34, 0.12);
+      --radius-sm: 12px;
+      --radius: 20px;
+      --radius-lg: 28px;
+      --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+      --transition: 0.35s var(--ease);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0f1413;
+        --bg-alt: #161d1b;
+        --card: #1a211f;
+        --card-alt: #1f2725;
+        --text: #eef2f0;
+        --text-soft: #c2ccc8;
+        --muted: #8a9692;
+        --accent: #5cc0a5;
+        --accent-hover: #78d1b8;
+        --accent-soft: #1f3a33;
+        --accent-glow: rgba(92, 192, 165, 0.12);
+        --gold: #e0b06a;
+        --gold-soft: #3a2e1c;
+        --line: #2a3330;
+        --line-soft: #232b29;
+        --on: #0b1210;
+        --danger: #e07a6a;
+        --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 8px 24px -6px rgba(0, 0, 0, 0.45);
+        --shadow-lg: 0 20px 48px -12px rgba(0, 0, 0, 0.6);
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #0f1413;
+      --bg-alt: #161d1b;
+      --card: #1a211f;
+      --card-alt: #1f2725;
+      --text: #eef2f0;
+      --text-soft: #c2ccc8;
+      --muted: #8a9692;
+      --accent: #5cc0a5;
+      --accent-hover: #78d1b8;
+      --accent-soft: #1f3a33;
+      --accent-glow: rgba(92, 192, 165, 0.12);
+      --gold: #e0b06a;
+      --gold-soft: #3a2e1c;
+      --line: #2a3330;
+      --line-soft: #232b29;
+      --on: #0b1210;
+      --danger: #e07a6a;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 8px 24px -6px rgba(0, 0, 0, 0.45);
+      --shadow-lg: 0 20px 48px -12px rgba(0, 0, 0, 0.6);
+    }
+
+    /* ==================== RESET & BASE ==================== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 86px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      line-height: 1.65;
+      transition: background 0.4s ease, color 0.4s ease;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    html[lang="ur"] body {
+      font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', system-ui, serif;
+      line-height: 2.3;
+    }
+
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    a { color: inherit; }
+    button { font-family: inherit; }
+
+    /* ==================== NAV ==================== */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: color-mix(in srgb, var(--bg) 82%, transparent);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 1px solid var(--line-soft);
+      padding-top: env(safe-area-inset-top, 0px);
+      transition: background 0.4s ease, border-color 0.4s ease;
+    }
+
+    nav .wrap {
+      display: flex; align-items: center; justify-content: space-between; height: 72px;
+    }
+
+    .brand {
+      display: flex; align-items: center; gap: 11px;
+      font-weight: 800; font-size: 1.2rem; letter-spacing: -0.03em;
+    }
+
+    .brand-mark {
+      width: 38px; height: 38px; border-radius: 11px;
+      background: linear-gradient(140deg, var(--accent), var(--accent-hover));
+      display: grid; place-items: center; color: var(--on);
+      font-size: 1rem; font-weight: 800;
+      box-shadow: 0 4px 14px -3px var(--accent-glow);
+      animation: markPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes markPulse {
+      0%, 100% { box-shadow: 0 4px 14px -3px var(--accent-glow); }
+      50% { box-shadow: 0 6px 22px -2px var(--accent-glow); }
+    }
+
+    .brand-name { color: var(--text); }
+    .brand-name em { font-style: normal; color: var(--accent); }
+
+    .links { display: flex; gap: 6px; align-items: center; }
+
+    .links a {
+      color: var(--text-soft); text-decoration: none; font-size: 0.9rem;
+      font-weight: 600; padding: 8px 14px; border-radius: 10px;
+      transition: all var(--transition); position: relative;
+    }
+
+    .links a:hover { color: var(--accent); background: var(--accent-soft); }
+
+    .lang {
+      border: 1.5px solid var(--line); background: var(--card); color: var(--text-soft);
+      padding: 9px 20px; border-radius: 11px; font-size: 0.85rem; font-weight: 700;
+      cursor: pointer; transition: all var(--transition);
+      display: flex; align-items: center; gap: 7px;
+    }
+
+    .lang:hover {
+      border-color: var(--accent); color: var(--accent);
+      background: var(--accent-soft); transform: translateY(-1px);
+    }
+
+    .lang svg { width: 16px; height: 16px; }
+
+    @media (max-width: 680px) {
+      .links a.nav-link { display: none; }
+      nav .wrap { height: 64px; }
+    }
+
+    /* ==================== HERO ==================== */
+    .hero {
+      display: grid; gap: 56px; grid-template-columns: 1.05fr 0.95fr;
+      align-items: center; padding: 80px 0 60px; position: relative;
+    }
+
+    @media (max-width: 820px) {
+      .hero { grid-template-columns: 1fr; text-align: center; padding-top: 48px; gap: 36px; }
+      .hero .photo { order: -1; }
+      .hero .sub, .hero .badge-row { margin-inline: auto; }
+    }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid var(--line); background: var(--card);
+      border-radius: 99px; padding: 7px 16px 7px 8px;
+      font-size: 0.78rem; font-weight: 600; color: var(--text-soft);
+      letter-spacing: 0.01em; box-shadow: var(--shadow-sm);
+      animation: fadeInDown 0.7s var(--ease) forwards; opacity: 0;
+    }
+
+    .badge-dot {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--gold-soft); display: grid; place-items: center; color: var(--gold);
+    }
+
+    .badge-dot svg { width: 12px; height: 12px; }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 7vw, 3.9rem); line-height: 1.08;
+      margin: 22px 0 16px; letter-spacing: -0.04em; font-weight: 800;
+      animation: fadeInLeft 0.9s var(--ease) 0.05s forwards; opacity: 0;
+    }
+
+    h1 .accent { color: var(--accent); position: relative; display: inline-block; }
+
+    h1 .accent::after {
+      content: ''; position: absolute; left: 2px; bottom: 6px;
+      width: 100%; height: 12px; background: var(--gold); opacity: 0.3;
+      border-radius: 4px; z-index: -1; transform-origin: left;
+      transform: scaleX(0); animation: underlineGrow 0.8s var(--ease) 0.7s forwards;
+    }
+
+    @keyframes underlineGrow { to { transform: scaleX(1); } }
+
+    @keyframes fadeInLeft {
+      from { opacity: 0; transform: translateX(-28px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .sub {
+      font-size: 1.08rem; color: var(--text-soft); margin: 0 0 32px;
+      max-width: 480px; animation: fadeInLeft 0.9s var(--ease) 0.18s forwards; opacity: 0;
+    }
+
+    .cta-row {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      animation: fadeInUp 0.8s var(--ease) 0.32s forwards; opacity: 0;
+    }
+
+    @media (max-width: 820px) { .cta-row { justify-content: center; } }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: var(--accent); color: var(--on);
+      padding: 14px 28px; border-radius: var(--radius-sm);
+      text-decoration: none; font-weight: 700; font-size: 0.94rem;
+      border: 1.5px solid transparent; cursor: pointer;
+      transition: all var(--transition); position: relative;
+      overflow: hidden; box-shadow: 0 6px 20px -6px var(--accent-glow);
+    }
+
+    .btn svg { width: 18px; height: 18px; transition: transform var(--transition); }
+
+    .btn:hover {
+      background: var(--accent-hover); transform: translateY(-2px);
+      box-shadow: 0 12px 28px -8px var(--accent-glow);
+    }
+
+    .btn:hover svg { transform: translateX(3px); }
+
+    .btn.ghost {
+      background: var(--card); color: var(--accent);
+      border-color: var(--line); box-shadow: var(--shadow-sm);
+    }
+
+    .btn.ghost:hover {
+      background: var(--accent-soft); border-color: var(--accent);
+      box-shadow: var(--shadow-md);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==================== PHOTO ==================== */
+    .photo {
+      position: relative; max-width: 340px; margin: 0 auto; width: 100%;
+      animation: floatY 7s ease-in-out infinite;
+    }
+
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    .photo::before {
+      content: ''; position: absolute; inset: -18px 18px 18px -18px;
+      border-radius: 54% 46% 48% 52% / 48% 52% 48% 52%;
+      background: linear-gradient(135deg, var(--accent), var(--gold));
+      opacity: 0.32; animation: morphBlob 9s ease-in-out infinite alternate;
+      filter: blur(2px);
+    }
+
+    @keyframes morphBlob {
+      0% { border-radius: 54% 46% 48% 52% / 48% 52% 48% 52%; }
+      100% { border-radius: 46% 54% 52% 48% / 52% 48% 54% 46%; }
+    }
+
+    .photo img {
+      position: relative; width: 100%; aspect-ratio: 1/1.12;
+      object-fit: cover; object-position: center;
+      border-radius: var(--radius-lg);
+      border: 5px solid var(--card); display: block;
+      background: var(--card-alt); box-shadow: var(--shadow-lg);
+      transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+    }
+
+    .photo:hover img { transform: scale(1.02); }
+
+    .photo-tag {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      background: color-mix(in srgb, var(--card) 90%, transparent);
+      backdrop-filter: blur(8px); border: 1px solid var(--line);
+      padding: 8px 18px; border-radius: 99px; font-size: 0.82rem;
+      font-weight: 700; color: var(--text); white-space: nowrap;
+      box-shadow: var(--shadow-md); display: flex; align-items: center; gap: 6px;
+    }
+
+    .photo-tag svg { width: 14px; height: 14px; color: var(--accent); }
+
+    /* ==================== SECTIONS ==================== */
+    section { padding: 64px 0; }
+    .section-head { margin-bottom: 36px; }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 0.76rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+    }
+
+    .eyebrow svg { width: 15px; height: 15px; }
+
+    h2 {
+      font-size: 1.85rem; letter-spacing: -0.03em;
+      font-weight: 800; line-height: 1.2;
+    }
+
+    @media (max-width: 600px) { h2 { font-size: 1.55rem; } }
+
+    /* ==================== CARDS ==================== */
+    .card {
+      background: var(--card); border: 1px solid var(--line-soft);
+      border-radius: var(--radius); padding: 28px;
+      box-shadow: var(--shadow-sm); transition: all 0.4s var(--ease);
+    }
+
+    .card:hover {
+      transform: translateY(-4px); box-shadow: var(--shadow-md);
+      border-color: var(--accent-soft);
+    }
+
+    .grid {
+      display: grid; gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    /* Feature cards with icons + mini image */
+    .feature-card { position: relative; padding-top: 24px; }
+
+    .feature-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--accent-soft); color: var(--accent);
+      display: grid; place-items: center; margin-bottom: 18px;
+      transition: all 0.4s var(--ease);
+    }
+
+    .feature-icon svg { width: 24px; height: 24px; }
+
+    .feature-card:hover .feature-icon {
+      background: var(--accent); color: var(--on);
+      transform: rotate(-6deg) scale(1.08);
+    }
+
+    .feature-card h3 {
+      margin: 0 0 8px; font-size: 1.06rem; color: var(--text);
+      font-weight: 700; letter-spacing: -0.01em;
+    }
+
+    .feature-card p {
+      margin: 0; color: var(--muted); font-size: 0.92rem; line-height: 1.6;
+    }
+
+    /* Mini illustration inside feature cards */
+    .feature-thumb {
+      width: 100%; height: 130px; border-radius: 14px;
+      margin-bottom: 16px; overflow: hidden; position: relative;
+      background: var(--accent-soft); border: 1px solid var(--line-soft);
+    }
+
+    .feature-thumb svg { width: 100%; height: 100%; display: block; }
+
+    /* ==================== ABOUT WITH SIDE IMAGE ==================== */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 40px; align-items: center;
+    }
+
+    @media (max-width: 780px) {
+      .about-grid { grid-template-columns: 1fr; gap: 28px; }
+      .about-grid .about-visual { order: -1; }
+    }
+
+    .about-visual {
+      position: relative; border-radius: var(--radius-lg);
+      overflow: hidden; border: 1px solid var(--line);
+      background: var(--accent-soft); box-shadow: var(--shadow-md);
+      aspect-ratio: 4/3; transition: transform 0.5s var(--ease);
+    }
+
+    .about-visual:hover { transform: scale(1.015); }
+    .about-visual svg { width: 100%; height: 100%; display: block; }
+
+    .about-visual-tag {
+      position: absolute; bottom: 16px; left: 16px;
+      background: color-mix(in srgb, var(--card) 90%, transparent);
+      backdrop-filter: blur(8px); border: 1px solid var(--line);
+      padding: 7px 16px; border-radius: 99px; font-size: 0.78rem;
+      font-weight: 700; color: var(--text); box-shadow: var(--shadow-sm);
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    .about-visual-tag svg { width: 13px; height: 13px; color: var(--accent); }
+
+    /* ==================== RULES ==================== */
+    .rules-card { padding: 32px; }
+
+    .rule-list { list-style: none; padding: 0; display: grid; gap: 2px; }
+
+    .rule-list li {
+      display: flex; gap: 16px; align-items: flex-start;
+      padding: 15px 14px; border-radius: 14px;
+      transition: all var(--transition); border: 1px solid transparent;
+    }
+
+    .rule-list li:hover {
+      background: var(--bg-alt); border-color: var(--line-soft);
+      transform: translateX(4px);
+    }
+
+    html[dir="rtl"] .rule-list li:hover { transform: translateX(-4px); }
+
+    .rule-num {
+      flex-shrink: 0; width: 30px; height: 30px; border-radius: 9px;
+      background: var(--accent-soft); color: var(--accent);
+      display: grid; place-items: center; font-weight: 800;
+      font-size: 0.82rem; margin-top: 1px; transition: all var(--transition);
+    }
+
+    .rule-list li:hover .rule-num { background: var(--accent); color: var(--on); }
+
+    .rule-text { font-size: 0.93rem; color: var(--text-soft); line-height: 1.55; }
+    .rule-text b { color: var(--text); font-weight: 700; }
+
+    /* "Not for" card */
+    .not-card {
+      background: linear-gradient(160deg, var(--card), var(--card-alt));
+      border: 1px solid var(--line); position: relative; overflow: hidden;
+    }
+
+    .not-card::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 4px; height: 100%; background: var(--danger);
+    }
+
+    .not-head { display: flex; align-items: center; gap: 11px; margin-bottom: 18px; }
+
+    .not-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: color-mix(in srgb, var(--danger) 12%, transparent);
+      color: var(--danger); display: grid; place-items: center;
+    }
+
+    .not-icon svg { width: 20px; height: 20px; }
+
+    .not-head h3 { font-size: 1.1rem; color: var(--danger); font-weight: 700; }
+
+    .not-list { list-style: none; padding: 0; display: grid; gap: 10px; }
+
+    .not-list li {
+      display: flex; align-items: center; gap: 11px;
+      font-size: 0.92rem; color: var(--muted); padding: 4px 0;
+    }
+
+    .not-list li svg { width: 17px; height: 17px; color: var(--danger); flex-shrink: 0; }
+
+    /* ==================== STEPS ==================== */
+    .steps {
+      counter-reset: step; display: grid; gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); position: relative;
+    }
+
+    .step-card {
+      position: relative; padding: 28px 24px 24px; text-align: center;
+      background: var(--card); border: 1px solid var(--line-soft);
+      border-radius: var(--radius); box-shadow: var(--shadow-sm);
+      transition: all 0.4s var(--ease);
+    }
+
+    .step-card:hover {
+      transform: translateY(-6px); box-shadow: var(--shadow-md);
+      border-color: var(--accent-soft);
+    }
+
+    .step-badge {
+      counter-increment: step; width: 52px; height: 52px;
+      margin: 0 auto 18px; border-radius: 16px;
+      background: var(--accent-soft); color: var(--accent);
+      display: grid; place-items: center; font-weight: 800;
+      font-size: 1.15rem; position: relative; transition: all 0.4s var(--ease);
+    }
+
+    .step-badge::after { content: counter(step); position: absolute; }
+
+    .step-card:hover .step-badge {
+      background: var(--accent); color: var(--on);
+      transform: scale(1.08) rotate(-5deg);
+    }
+
+    .step-card p { color: var(--text-soft); font-size: 0.92rem; line-height: 1.6; margin: 0; }
+
+    /* Step mini illustration */
+    .step-illus {
+      width: 64px; height: 64px; margin: 0 auto 14px;
+      color: var(--gold); opacity: 0.9;
+    }
+
+    .step-illus svg { width: 100%; height: 100%; }
+
+    /* ==================== PRICE ==================== */
+    .price-card {
+      background: linear-gradient(145deg, var(--card), var(--card-alt));
+      border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 32px; display: flex; gap: 24px;
+      align-items: flex-start; position: relative; overflow: hidden;
+    }
+
+    .price-card::after {
+      content: ''; position: absolute; top: -40px; right: -40px;
+      width: 140px; height: 140px; border-radius: 50%;
+      background: var(--gold-soft); opacity: 0.45; filter: blur(20px);
+    }
+
+    .price-icon {
+      flex-shrink: 0; width: 56px; height: 56px; border-radius: 16px;
+      background: var(--gold-soft); color: var(--gold);
+      display: grid; place-items: center;
+    }
+
+    .price-icon svg { width: 28px; height: 28px; }
+
+    .price-card p {
+      color: var(--text-soft); font-size: 0.98rem; line-height: 1.65;
+      position: relative; z-index: 1;
+    }
+
+    .price-card p b { color: var(--text); font-weight: 700; }
+
+    @media (max-width: 560px) {
+      .price-card { flex-direction: column; gap: 16px; padding: 26px; }
+    }
+
+    /* ==================== BOOKING ==================== */
+    .booking-card {
+      text-align: center; padding: 48px 32px;
+      background: linear-gradient(165deg, var(--card), var(--card-alt));
+      border: 1px solid var(--line); border-radius: var(--radius-lg);
+      position: relative; overflow: hidden;
+    }
+
+    .booking-card::before {
+      content: ''; position: absolute; top: -80px; left: 50%;
+      transform: translateX(-50%); width: 300px; height: 300px;
+      border-radius: 50%; background: var(--accent-soft);
+      opacity: 0.4; filter: blur(60px); pointer-events: none;
+    }
+
+    .booking-icon {
+      width: 64px; height: 64px; margin: 0 auto 20px; border-radius: 20px;
+      background: var(--accent); color: var(--on); display: grid; place-items: center;
+      box-shadow: 0 12px 28px -8px var(--accent-glow);
+      position: relative; z-index: 1; animation: floatY 5s ease-in-out infinite;
+    }
+
+    .booking-icon svg { width: 30px; height: 30px; }
+
+    .booking-card h2 { margin-bottom: 10px; position: relative; z-index: 1; }
+
+    .booking-card .book-sub {
+      color: var(--text-soft); font-size: 1rem; margin-bottom: 28px;
+      position: relative; z-index: 1;
+    }
+
+    .booking-actions {
+      display: flex; gap: 14px; justify-content: center;
+      flex-wrap: wrap; position: relative; z-index: 1;
+    }
+
+    .btn-wa {
+      background: #25d366; color: #ffffff;
+      box-shadow: 0 8px 24px -6px rgba(37, 211, 102, 0.4);
+    }
+
+    .btn-wa:hover { background: #1eb958; box-shadow: 0 12px 30px -6px rgba(37, 211, 102, 0.5); }
+
+    .btn-ig {
+      background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      color: #ffffff; box-shadow: 0 8px 24px -6px rgba(220, 39, 67, 0.35);
+    }
+
+    .btn-ig:hover { filter: brightness(1.1); box-shadow: 0 12px 30px -6px rgba(220, 39, 67, 0.5); }
+
+    /* ==================== FOOTER ==================== */
+    footer { border-top: 1px solid var(--line-soft); padding: 40px 0 56px; margin-top: 20px; }
+
+    .footer-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 20px; flex-wrap: wrap;
+    }
+
+    .footer-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1rem; }
+
+    .footer-mark {
+      width: 30px; height: 30px; border-radius: 9px;
+      background: var(--accent); color: var(--on);
+      display: grid; place-items: center; font-size: 0.8rem; font-weight: 800;
+    }
+
+    .footer-copy { color: var(--muted); font-size: 0.84rem; line-height: 1.7; }
+    .footer-copy b { color: var(--text-soft); }
+
+    /* ==================== SCROLL REVEAL ==================== */
+    .reveal-left, .reveal-right, .reveal-up {
+      opacity: 0;
+      transition: opacity 0.85s var(--ease), transform 0.85s var(--ease);
+      will-change: opacity, transform;
+    }
+
+    .reveal-left { transform: translateX(-50px); }
+    .reveal-right { transform: translateX(50px); }
+    .reveal-up { transform: translateY(30px); }
+
+    .reveal-left.in, .reveal-right.in, .reveal-up.in {
+      opacity: 1; transform: translate(0, 0);
+    }
+
+    .stagger-1 { transition-delay: 0.06s; }
+    .stagger-2 { transition-delay: 0.12s; }
+    .stagger-3 { transition-delay: 0.18s; }
+    .stagger-4 { transition-delay: 0.24s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal-left, .reveal-right, .reveal-up { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAV ==================== -->
+  <nav>
+    <div class="wrap">
+      <div class="brand">
+        <div class="brand-mark">AK</div>
+        <span class="brand-name">Ali <em>Khan</em></span>
+      </div>
+      <div class="links">
+        <a href="#about" class="nav-link" data-k="nav1">About</a>
+        <a href="#rules" class="nav-link" data-k="nav2">Rules</a>
+        <a href="#booking" class="nav-link" data-k="nav3">Book</a>
+        <button class="lang" id="langBtn" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span>اردو</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+
+    <!-- ==================== HERO ==================== -->
+    <div class="hero">
+      <div class="reveal-left">
+        <div class="badge-row">
+          <span class="badge" data-k="badge">
+            <span class="badge-dot">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/></svg>
+            </span>
+            Pakistan’s first “do-nothing” service
+          </span>
+        </div>
+        <h1 data-k="h1">Hi, I’m <span class="accent">Ali Khan</span></h1>
+        <p class="sub" data-k="sub">Your silent companion. Just sit together. No need to do anything.</p>
+        <div class="cta-row">
+          <a class="btn" href="#booking">
+            <span data-k="cta1">Book a Session</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a class="btn ghost" href="#rules">
+            <span data-k="cta2">See Rules</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="photo reveal-right">
+        <!-- YAHAN AAP KI REAL PHOTO LAGI HAI -->
+        <img id="heroImg" alt="Ali Khan" src="https://i.ibb.co/6PZk0sZ/ali-khan.jpg">
+        <div class="photo-tag">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+          <span data-k="photoTag">Islamabad · Public spaces</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== ABOUT (WITH IMAGE) ==================== -->
+    <section id="about">
+      <div class="section-head reveal-up">
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <span data-k="eyebrowAbout">The idea</span>
+        </div>
+        <h2 data-k="aboutH">What is this?</h2>
+      </div>
+
+      <div class="about-grid">
+        <!-- Image / Illustration -->
+        <div class="about-visual reveal-left stagger-1">
+          <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg">
+            <rect width="480" height="360" fill="#d4e8e1"/>
+            <!-- Table -->
+            <rect x="80" y="230" width="320" height="16" rx="8" fill="#1f6f5c" opacity="0.85"/>
+            <rect x="110" y="246" width="12" height="80" rx="4" fill="#1f6f5c" opacity="0.6"/>
+            <rect x="358" y="246" width="12" height="80" rx="4" fill="#1f6f5c" opacity="0.6"/>
+            <!-- Cup left -->
+            <rect x="140" y="196" width="46" height="34" rx="8" fill="#ffffff"/>
+            <rect x="186" y="206" width="12" height="16" rx="6" fill="#ffffff"/>
+            <ellipse cx="163" cy="196" rx="23" ry="6" fill="#f5e6cd"/>
+            <!-- Cup right -->
+            <rect x="298" y="196" width="46" height="34" rx="8" fill="#ffffff"/>
+            <rect x="344" y="206" width="12" height="16" rx="6" fill="#ffffff"/>
+            <ellipse cx="321" cy="196" rx="23" ry="6" fill="#f5e6cd"/>
+            <!-- Person left -->
+            <circle cx="150" cy="140" r="30" fill="#1f6f5c"/>
+            <rect x="118" y="172" width="64" height="60" rx="18" fill="#1f6f5c"/>
+            <!-- Person right -->
+            <circle cx="330" cy="140" r="30" fill="#d9a353"/>
+            <rect x="298" y="172" width="64" height="60" rx="18" fill="#d9a353"/>
+            <!-- Steam -->
+            <path d="M158 180c0-8 6-8 6-16M170 180c0-8 6-8 6-16" stroke="#7c8783" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.5"/>
+            <path d="M316 180c0-8 6-8 6-16M328 180c0-8 6-8 6-16" stroke="#7c8783" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.5"/>
+            <!-- Quiet dots -->
+            <circle cx="240" cy="120" r="4" fill="#1f6f5c" opacity="0.35"/>
+            <circle cx="240" cy="140" r="4" fill="#d9a353" opacity="0.35"/>
+            <circle cx="240" cy="160" r="4" fill="#1f6f5c" opacity="0.35"/>
+          </svg>
+          <div class="about-visual-tag">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            <span data-k="aboutTag">Quiet company · Public place</span>
+          </div>
+        </div>
+
+        <!-- Text -->
+        <div class="reveal-right stagger-2">
+          <div class="card" style="padding:32px;">
+            <p style="color:var(--text-soft);font-size:1.05rem;line-height:1.75;margin:0;" data-k="aboutP">
+              Does sitting alone in a cafe feel awkward? Do you focus better when someone is simply nearby? Is waiting alone hard? I just keep you company. No small talk pressure, no questions. Only calm, quiet presence in a public place.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== WHO IS IT FOR (WITH MINI IMAGES) ==================== -->
+    <section>
+      <div class="section-head reveal-up">
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          <span data-k="eyebrowFor">Who it helps</span>
+        </div>
+        <h2 data-k="forH">Who is it for?</h2>
+      </div>
+
+      <div class="grid">
+        <!-- Card 1 with mini illustration -->
+        <div class="card feature-card reveal-left stagger-1">
+          <div class="feature-thumb">
+            <svg viewBox="0 0 300 130" xmlns="http://www.w3.org/2000/svg">
+              <rect width="300" height="130" fill="#d4e8e1"/>
+              <rect x="70" y="92" width="160" height="10" rx="5" fill="#1f6f5c" opacity="0.8"/>
+              <rect x="90" y="102" width="8" height="22" rx="3" fill="#1f6f5c" opacity="0.5"/>
+              <rect x="202" y="102" width="8" height="22" rx="3" fill="#1f6f5c" opacity="0.5"/>
+              <rect x="110" y="58" width="60" height="34" rx="4" fill="#ffffff" stroke="#1f6f5c" stroke-width="2"/>
+              <path d="M120 66h40M120 74h30M120 82h35" stroke="#7c8783" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="200" cy="58" r="16" fill="#d9a353"/>
+              <rect x="184" y="74" width="32" height="18" rx="8" fill="#d9a353"/>
+            </svg>
+          </div>
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+          </div>
+          <h3 data-k="f1t">Study / Work Buddy</h3>
+          <p data-k="f1p">Sit together and do your own work or studies, for better focus.</p>
+        </div>
+
+        <!-- Card 2 with mini illustration -->
+        <div class="card feature-card reveal-up stagger-2">
+          <div class="feature-thumb">
+            <svg viewBox="0 0 300 130" xmlns="http://www.w3.org/2000/svg">
+              <rect width="300" height="130" fill="#f5e6cd"/>
+              <rect x="80" y="88" width="140" height="10" rx="5" fill="#1f6f5c" opacity="0.8"/>
+              <rect x="100" y="98" width="8" height="22" rx="3" fill="#1f6f5c" opacity="0.5"/>
+              <rect x="192" y="98" width="8" height="22" rx="3" fill="#1f6f5c" opacity="0.5"/>
+              <rect x="118" y="54" width="30" height="34" rx="6" fill="#ffffff"/>
+              <rect x="148" y="62" width="8" height="14" rx="4" fill="#ffffff"/>
+              <ellipse cx="133" cy="54" rx="15" ry="4" fill="#d9a353"/>
+              <rect x="170" y="54" width="30" height="34" rx="6" fill="#ffffff"/>
+              <rect x="200" y="62" width="8" height="14" rx="4" fill="#ffffff"/>
+              <ellipse cx="185" cy="54" rx="15" ry="4" fill="#d9a353"/>
+              <path d="M128 44c0-5 4-5 4-10M140 44c0-5 4-5 4-10" stroke="#7c8783" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4z"/><path d="M6 1v3M10 1v3M14 1v3"/></svg>
+          </div>
+          <h3 data-k="f2t">Cafe or Park Company</h3>
+          <p data-k="f2p">A quiet companion over tea or coffee.</p>
+        </div>
+
+        <!-- Card 3 with mini illustration -->
+        <div class="card feature-card reveal-right stagger-3">
+          <div class="feature-thumb">
+            <svg viewBox="0 0 300 130" xmlns="http://www.w3.org/2000/svg">
+              <rect width="300" height="130" fill="#d4e8e1"/>
+              <rect x="80" y="88" width="140" height="10" rx="5" fill="#1f6f5c" opacity="0.8"/>
+              <rect x="100" y="98" width="8" height="22" rx="3" fill="#1f6f5c" opacity="0.5"/>
+              <rect x="192" y="98" width="8" height="22" rx="3" fill="#1f6f5c" opacity="0.5"/>
+              <!-- Bench -->
+              <rect x="60" y="82" width="180" height="8" rx="4" fill="#d9a353"/>
+              <rect x="70" y="90" width="6" height="16" rx="2" fill="#d9a353" opacity="0.6"/>
+              <rect x="224" y="90" width="6" height="16" rx="2" fill="#d9a353" opacity="0.6"/>
+              <!-- Sitting persons -->
+              <circle cx="110" cy="56" r="14" fill="#1f6f5c"/>
+              <rect x="94" y="68" width="32" height="16" rx="8" fill="#1f6f5c"/>
+              <circle cx="190" cy="56" r="14" fill="#d9a353"/>
+              <rect x="174" y="68" width="32" height="16" rx="8" fill="#d9a353"/>
+              <!-- Clock -->
+              <circle cx="150" cy="34" r="12" fill="#ffffff" stroke="#7c8783" stroke-width="2"/>
+              <path d="M150 27v7l5 3" stroke="#7c8783" stroke-width="2" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <h3 data-k="f3t">Waiting Companion</h3>
+          <p data-k="f3p">Someone to sit with you while you wait alone.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== RULES ==================== -->
+    <section id="rules">
+      <div class="section-head reveal-up">
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+          <span data-k="eyebrowRules">Simple & clear</span>
+        </div>
+        <h2 data-k="rulesH">Rules (please read)</h2>
+      </div>
+
+      <div class="card rules-card reveal-up stagger-1">
+        <ul class="rule-list">
+          <li><span class="rule-num">1</span><span class="rule-text" data-k="r1"><b>Public places only:</b> cafe, park, library or open spaces. Never at home, in a car or in a closed room.</span></li>
+          <li><span class="rule-num">2</span><span class="rule-text" data-k="r2"><b>Talk first:</b> all details are agreed on WhatsApp chat or call before booking.</span></li>
+          <li><span class="rule-num">3</span><span class="rule-text" data-k="r3"><b>Time limit:</b> one session is 1 to 2 hours.</span></li>
+          <li><span class="rule-num">4</span><span class="rule-text" data-k="r4"><b>Respect and boundaries:</b> no inappropriate talk, staring or personal questions. Respect from both sides.</span></li>
+          <li><span class="rule-num">5</span><span class="rule-text" data-k="r5"><b>If anyone is uncomfortable:</b> the session ends right away, no arguments.</span></li>
+          <li><span class="rule-num">6</span><span class="rule-text" data-k="r6"><b>Safety:</b> I share the place and time with a friend or family member.</span></li>
+          <li><span class="rule-num">7</span><span class="rule-text" data-k="r7"><b>Food and drinks:</b> each pays their own, or as the client prefers.</span></li>
+          <li><span class="rule-num">8</span><span class="rule-text" data-k="r8"><b>Photo/Video:</b> nothing is recorded or posted without your permission.</span></li>
+          <li><span class="rule-num">9</span><span class="rule-text" data-k="r9"><b>Privacy:</b> nothing you say or share is passed on to anyone.</span></li>
+          <li><span class="rule-num">10</span><span class="rule-text" data-k="r10"><b>Cancellation:</b> please inform at least 3 hours before.</span></li>
+        </ul>
+      </div>
+
+      <!-- NOT FOR -->
+      <div class="card not-card reveal-up stagger-2" style="margin-top:22px;">
+        <div class="not-head">
+          <div class="not-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
+          </div>
+          <h3 data-k="noH">This is not</h3>
+        </div>
+        <ul class="not-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg><span data-k="n1">Dating or matchmaking</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg><span data-k="n2">Counselling or therapy</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg><span data-k="n3">Personal or household work of any kind</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg><span data-k="n4">Meeting at night or in isolated places</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ==================== HOW IT WORKS (WITH MINI ILLUSTRATIONS) ==================== -->
+    <section>
+      <div class="section-head reveal-up">
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          <span data-k="eyebrowHow">Step by step</span>
+        </div>
+        <h2 data-k="howH">How it works</h2>
+      </div>
+
+      <div class="steps">
+        <!-- Step 1 -->
+        <div class="step-card reveal-left stagger-1">
+          <div class="step-illus">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M40 28a8 8 0 11-16 0 8 8 0 0116 0z" fill="currentColor" fill-opacity="0.12"/>
+              <path d="M12 52c0-8 7-14 20-14s20 6 20 14"/>
+              <path d="M44 18l6-6M50 18l-6-6" stroke-width="2.5"/>
+            </svg>
+          </div>
+          <div class="step-badge"></div>
+          <p data-k="s1">Message me on WhatsApp or Instagram.</p>
+        </div>
+        <!-- Step 2 -->
+        <div class="step-card reveal-up stagger-2">
+          <div class="step-illus">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="12" y="14" width="40" height="36" rx="4" fill="currentColor" fill-opacity="0.12"/>
+              <path d="M12 24h40M22 8v12M42 8v12"/>
+              <path d="M22 34h6M34 34h8M22 42h4M30 42h12" stroke-width="2.5"/>
+            </svg>
+          </div>
+          <div class="step-badge"></div>
+          <p data-k="s2">Agree on place, time and rules.</p>
+        </div>
+        <!-- Step 3 -->
+        <div class="step-card reveal-up stagger-3">
+          <div class="step-illus">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="22" cy="26" r="8" fill="currentColor" fill-opacity="0.12"/>
+              <circle cx="42" cy="26" r="8" fill="currentColor" fill-opacity="0.12"/>
+              <path d="M8 52c0-7 6-12 14-12s14 5 14 12M28 52c0-7 6-12 14-12s14 5 14 12"/>
+            </svg>
+          </div>
+          <div class="step-badge"></div>
+          <p data-k="s3">Meet in a public place and sit together.</p>
+        </div>
+        <!-- Step 4 -->
+        <div class="step-card reveal-right stagger-4">
+          <div class="step-illus">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M32 8l6 14 15 2-11 10 3 15-13-7-13 7 3-15-11-10 15-2z" fill="currentColor" fill-opacity="0.12"/>
+              <path d="M24 34l6 6 12-12" stroke-width="3.5"/>
+            </svg>
+          </div>
+          <div class="step-badge"></div>
+          <p data-k="s4">Share your feedback after the session.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== RATE ==================== -->
+    <section>
+      <div class="section-head reveal-up">
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          <span data-k="eyebrowPrice">Pricing</span>
+        </div>
+        <h2 data-k="priceH">Rate</h2>
+      </div>
+      <div class="price-card reveal-up stagger-1">
+        <div class="price-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p data-k="priceP"><b>Launch offer:</b> the first few sessions are free or very low cost in exchange for feedback. Final rates will be set after feedback.</p>
+      </div>
+    </section>
+
+    <!-- ==================== BOOKING ==================== -->
+    <section id="booking">
+      <div class="booking-card reveal-up">
+        <div class="booking-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+        </div>
+        <h2 data-k="bookH">Book a Session</h2>
+        <p class="book-sub" data-k="bookP">Message me with your name, place and preferred time.</p>
+        <div class="booking-actions">
+          <a class="btn btn-wa" data-k="wa" href="https://wa.me/92300XXXXXXX?text=Assalam%20o%20Alaikum%20Ali%2C%20I%20want%20to%20book%20a%20session." target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <span data-k="waText">Message on WhatsApp</span>
+          </a>
+          <a class="btn btn-ig" href="https://instagram.com/YOUR_USERNAME" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg>
+            <span data-k="igText">Instagram</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer>
+    <div class="wrap footer-inner">
+      <div class="footer-brand">
+        <div class="footer-mark">AK</div>
+        <span>Ali Khan</span>
+      </div>
+      <div class="footer-copy" data-k="foot">
+        © 2026 Ali Khan · Islamabad, Pakistan<br>
+        <b>Just a companion, nothing more.</b>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ==================== TRANSLATIONS ====================
+    var UR = {
+      nav1: "تعارف", nav2: "اصول", nav3: "بک کریں",
+      badge: "پاکستان کی پہلی «کچھ نہ کرنے والی» سروس",
+      photoTag: "اسلام آباد · عوامی جگہیں",
+      h1: "میں <span class=\"accent\">علی خان</span> ہوں",
+      sub: "آپ کا خاموش ساتھی۔ بس ساتھ بیٹھنا، کچھ کرنے کی ضرورت نہیں۔",
+      cta1: "سیشن بک کریں", cta2: "اصول دیکھیں",
+      eyebrowAbout: "خیال",
+      aboutH: "یہ کیا ہے؟",
+      aboutTag: "خاموش ساتھ · عوامی جگہ",
+      aboutP: "کیا اکیلے کیفے میں بیٹھنا عجیب لگتا ہے؟ کیا کسی کی موجودگی سے آپ کا فوکس بہتر ہوتا ہے؟ اکیلے انتظار کرنا مشکل لگتا ہے؟ میں بس آپ کے ساتھ ہوتا ہوں۔ نہ زیادہ باتوں کا دباؤ، نہ سوالات۔ صرف سکون بھری خاموش موجودگی، عوامی جگہ پر۔",
+      eyebrowFor: "کس کے لیے",
+      forH: "کن کے لیے؟",
+      f1t: "اسٹڈی / کام کا ساتھی", f1p: "ساتھ بیٹھ کر اپنا کام یا پڑھائی کریں، فوکس بڑھانے کے لیے۔",
+      f2t: "کیفے یا پارک میں ساتھ", f2p: "چائے یا کافی پر ایک خاموش ساتھی۔",
+      f3t: "انتظار کا ساتھی", f3p: "اکیلے انتظار کرتے وقت ساتھ بیٹھنے والا کوئی۔",
+      eyebrowRules: "سادہ اور واضح",
+      rulesH: "اصول (ضرور پڑھیں)",
+      r1: "<b>صرف عوامی جگہ:</b> کیفے، پارک، لائبریری یا کھلی جگہ۔ گھر، گاڑی یا بند کمرے میں ہرگز نہیں۔",
+      r2: "<b>پہلے بات چیت:</b> بکنگ سے پہلے واٹس ایپ چیٹ یا کال پر تمام تفصیلات طے ہوں گی۔",
+      r3: "<b>وقت کی حد:</b> ایک سیشن 1 سے 2 گھنٹے کا ہوگا۔",
+      r4: "<b>عزت اور حدود:</b> کوئی نامناسب بات، گھورنا یا ذاتی سوالات نہیں۔ دونوں طرف سے عزت ضروری ہے۔",
+      r5: "<b>اگر کوئی بے آرام ہو:</b> سیشن فوراً ختم کر دیا جائے گا، کوئی بحث نہیں۔",
+      r6: "<b>حفاظت:</b> میں جگہ اور وقت اپنے کسی دوست یا گھر والے کو بتا کر آتا ہوں۔",
+      r7: "<b>کھانا پینا:</b> ہر کوئی اپنا خرچ خود اٹھائے گا، یا جیسا کلائنٹ چاہے۔",
+      r8: "<b>تصویر/ویڈیو:</b> آپ کی اجازت کے بغیر کچھ ریکارڈ یا پوسٹ نہیں ہوگا۔",
+      r9: "<b>پرائیویسی:</b> آپ کی کوئی بات یا تفصیل کسی کو نہیں بتائی جائے گی۔",
+      r10: "<b>منسوخی:</b> کم از کم 3 گھنٹے پہلے اطلاع دیں۔",
+      noH: "یہ سروس نہیں ہے",
+      n1: "ڈیٹنگ یا رشتہ", n2: "کونسلنگ یا تھراپی", n3: "کسی بھی قسم کا ذاتی یا گھریلو کام", n4: "رات کو یا سنسان جگہ پر ملنا",
+      eyebrowHow: "مرحلہ وار",
+      howH: "کیسے کام کرتا ہے؟",
+      s1: "واٹس ایپ یا انسٹاگرام پر مجھے میسج کریں۔", s2: "جگہ، وقت اور اصول طے کریں۔", s3: "عوامی جگہ پر ملیں اور ساتھ بیٹھیں۔", s4: "سیشن کے بعد اپنی رائے دیں۔",
+      eyebrowPrice: "قیمت",
+      priceH: "ریٹ",
+      priceP: "<b>شروعاتی آفر:</b> پہلے چند سیشن رائے کے بدلے مفت یا بہت کم ریٹ پر۔ حتمی ریٹ فیڈبیک کے بعد طے ہوگا۔",
+      bookH: "سیشن بک کریں",
+      bookP: "اپنا نام، جگہ اور پسندیدہ وقت بتا کر مجھے میسج کریں۔",
+      waText: "واٹس ایپ پر میسج کریں",
+      igText: "انسٹاگرام",
+      foot: "© 2026 علی خان · اسلام آباد، پاکستان<br><b>بس ایک ساتھی، اور کچھ نہیں۔</b>"
+    };
+
+    var els = [].slice.call(document.querySelectorAll("[data-k]"));
+    els.forEach(function (e) { e.dataset.en = e.innerHTML; });
+
+    var btn = document.getElementById("langBtn");
+    var langSpan = btn.querySelector("span");
+
+    function setLang(l) {
+      var ur = l === "ur";
+      document.documentElement.lang = ur ? "ur" : "en";
+      document.documentElement.dir = ur ? "rtl" : "ltr";
+      els.forEach(function (e) {
+        e.innerHTML = ur ? UR[e.dataset.k] : e.dataset.en;
+      });
+      langSpan.textContent = ur ? "English" : "اردو";
+      document.title = ur ? "علی خان – خاموش ساتھی" : "Ali Khan – Silent Companion";
+      try { localStorage.setItem("lang", l); } catch (x) {}
+    }
+
+    btn.addEventListener("click", function () {
+      setLang(document.documentElement.lang === "ur" ? "en" : "ur");
+    });
+
+    try {
+      if (localStorage.getItem("lang") === "ur") setLang("ur");
+    } catch (x) {}
+
+    // ==================== SCROLL REVEAL ====================
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+
+    document.querySelectorAll(".reveal-left, .reveal-right, .reveal-up").forEach(function (el) {
+      io.observe(el);
+    });
+
+    // ==================== NAV SHADOW ON SCROLL ====================
+    var nav = document.querySelector("nav");
+    window.addEventListener("scroll", function () {
+      if (window.scrollY > 10) {
+        nav.style.boxShadow = "0 4px 20px -8px rgba(0,0,0,0.08)";
+      } else {
+        nav.style.boxShadow = "none";
+      }
+    }, { passive: true });
+
+    // ==================== SUBTLE PHOTO PARALLAX ====================
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      var photo = document.querySelector(".photo");
+      if (photo && window.matchMedia("(pointer: fine)").matches) {
+        window.addEventListener("mousemove", function (e) {
+          var x = (e.clientX / window.innerWidth - 0.5) * 14;
+          var y = (e.clientY / window.innerHeight - 0.5) * 14;
+          photo.style.transform = "translate(" + x + "px, " + y + "px)";
+        });
+        window.addEventListener("mouseleave", function () {
+          photo.style.transform = "translate(0, 0)";
+        });
+      }
+    }
+  </script>
+
+</body>
+</html>
