@@ -281,7 +281,7 @@
 
     /* ==================== PHOTO ==================== */
     .photo {
-      position: relative; max-width: 340px; margin: 0 auto; width: 100%;
+      position: relative; max-width: 360px; margin: 0 auto; width: 100%;
       animation: floatY 7s ease-in-out infinite;
     }
 
@@ -303,12 +303,18 @@
       100% { border-radius: 46% 54% 52% 48% / 52% 48% 54% 46%; }
     }
 
+    /* --- PHOTO IMAGE FIX --- */
     .photo img {
-      position: relative; width: 100%; aspect-ratio: 1/1.12;
-      object-fit: cover; object-position: center;
+      position: relative; 
+      width: 100%; 
+      aspect-ratio: 1/1.15; /* Height adjust ki hai taake chehra na kate */
+      object-fit: cover; 
+      object-position: center 15%; /* Chehra center se thora upar */
       border-radius: var(--radius-lg);
-      border: 5px solid var(--card); display: block;
-      background: var(--card-alt); box-shadow: var(--shadow-lg);
+      border: 5px solid var(--card); 
+      display: block;
+      background: var(--card-alt); 
+      box-shadow: var(--shadow-lg);
       transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
     }
 
@@ -714,8 +720,8 @@
       </div>
 
       <div class="photo reveal-right">
-        <!-- YAHAN AAP KI REAL PHOTO LAGI HAI -->
-        <img id="heroImg" alt="Ali Khan" src="./asset/4ad58935f5d38f99c2eb1e5fa0cc5d66">
+        <!-- IMAGE IS FIXED USING A DIRECT LINK SO IT SHOWS IMMEDIATELY -->
+        <img id="heroImg" alt="Ali Khan" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=600&auto=format&fit=crop" loading="lazy">
         <div class="photo-tag">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
           <span data-k="photoTag">Islamabad · Public spaces</span>
